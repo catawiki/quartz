@@ -71,7 +71,7 @@ class Quartz::GoProcess
     delay = 0.001 # seconds
 
     loop do
-      return if File.exists?(@socket_path)
+      return if File.exist?(@socket_path)
       raise Quartz::GoServerError, 'RPC server not starting' if retries > max_retries
       sleep(delay * 2**retries)
       retries += 1
@@ -155,7 +155,7 @@ class Quartz::GoProcess
       @killed_go_process = true
     end
 
-    if @temp_file_path && File.exists?(@temp_file_path)
+    if @temp_file_path && File.exist?(@temp_file_path)
       File.delete(@temp_file_path)
     end
   end

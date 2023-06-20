@@ -45,9 +45,9 @@ describe Quartz::GoProcess do
     let(:process) { Quartz::GoProcess.new(file_path: 'spec/test.go', socket_dir: socket_dir) }
 
     it 'works with custom socket directory' do
-      expect(File.exists?(process.socket_path)).to be_truthy
+      expect(File.exist?(process.socket_path)).to be_truthy
       process.cleanup
-      expect(File.exists?(process.socket_path)).to be_falsey
+      expect(File.exist?(process.socket_path)).to be_falsey
     end
 
     it 'creates the socket in the socket dir' do
@@ -61,9 +61,9 @@ describe Quartz::GoProcess do
     let(:new_process) { Quartz::GoProcess.new(socket_path: process.socket_path) }
 
     it 'the new process does not clean up the existing socket' do
-      expect(File.exists?(new_process.socket_path)).to be_truthy
+      expect(File.exist?(new_process.socket_path)).to be_truthy
       new_process.cleanup
-      expect(File.exists?(new_process.socket_path)).to be_truthy
+      expect(File.exist?(new_process.socket_path)).to be_truthy
     end
 
     it 'creates the socket in the socket dir' do
@@ -86,9 +86,9 @@ describe Quartz::GoProcess do
     context 'files' do
 
       it "it deletes temporary files" do
-        expect(File.exists?(process.temp_file_path)).to be_truthy
+        expect(File.exist?(process.temp_file_path)).to be_truthy
         process.cleanup
-        expect(File.exists?(process.temp_file_path)).to be_falsey
+        expect(File.exist?(process.temp_file_path)).to be_falsey
       end
 
     end
@@ -96,22 +96,22 @@ describe Quartz::GoProcess do
     context 'processes' do
 
       it "it kills child processes" do
-        expect(File.exists?(process.temp_file_path)).to be_truthy
+        expect(File.exist?(process.temp_file_path)).to be_truthy
         process.cleanup
-        expect(File.exists?(process.temp_file_path)).to be_falsey
+        expect(File.exist?(process.temp_file_path)).to be_falsey
         expect($?.exited?).to be_truthy
       end
 
       it 'does not kill child processes if forked' do
-        expect(File.exists?(process.temp_file_path)).to be_truthy
+        expect(File.exist?(process.temp_file_path)).to be_truthy
         process
         process.forked_mode!
         process.cleanup
-        expect(File.exists?(process.temp_file_path)).to be_truthy
+        expect(File.exist?(process.temp_file_path)).to be_truthy
 
         process.forked_mode!
         process.cleanup
-        expect(File.exists?(process.temp_file_path)).to be_falsey
+        expect(File.exist?(process.temp_file_path)).to be_falsey
       end
 
     end
@@ -120,7 +120,7 @@ describe Quartz::GoProcess do
 
       it 'cleans up sockets created by the go application' do
         process.cleanup
-        expect(File.exists?(process.socket_path)).to be_falsey
+        expect(File.exist?(process.socket_path)).to be_falsey
       end
 
     end
